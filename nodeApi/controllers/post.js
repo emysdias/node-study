@@ -1,7 +1,12 @@
 const Post = require("../models/post");
 
 const getPosts = (req, res) => {
-  res.json({ teste: "teste" });
+  Post.find()
+    .select("_id title body")
+    .then((posts) => {
+      res.status(200).json({ posts: posts });
+    })
+    .catch((error) => console.log(error));
 };
 
 const createPosts = async (req, res) => {
@@ -10,8 +15,8 @@ const createPosts = async (req, res) => {
     await post.save();
     return res.status(200).json(post);
   } catch (error) {
-    return res.status(400).json({
-      message: `${error}`,
+    return res.status(500).json({
+      message: "Erro no servidor",
     });
   }
 };
