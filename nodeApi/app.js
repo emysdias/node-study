@@ -4,14 +4,14 @@ const app = express();
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-const expressValidator = require("express-validator");
+const expressValidator = require('express-validator');
 const dotenv = require("dotenv");
 dotenv.config();
 
 app.use(morgan("dev"));
+app.use(expressValidator());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(expressValidator());
 app.use("/", postRoutes);
 
 mongoose.connect(process.env.MONGO_URL).then(() => {
